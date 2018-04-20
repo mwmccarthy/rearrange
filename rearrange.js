@@ -36,7 +36,7 @@ for (const re of rearranges) {
 console.log(winner.toString(16));
 console.log(best);
 
-const requestURL = './skills.json';
+const requestURL = 'https://mwmccarthy.github.io/rearrange/skills.json';
 const request = new XMLHttpRequest();
 request.open('GET', requestURL);
 request.responseType = 'json';
