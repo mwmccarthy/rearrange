@@ -1,0 +1,33 @@
+{
+"adventuring": {
+    "movement": {
+        "swimming": "0x22010",
+        "riding": {
+            "horse": "0x22010",
+            "camel": "0x22010"
+        },
+        "climbing": {
+            "tree": "0x22010",
+            "rock": "0x22010",
+            "rope": "0x22010"
+        },
+        "sailing": "0x22010",
+        "following": {
+            "pursuit": "0x22010",
+            "evade": "0x22010"
+        }
+    },
+    "acrobatics": {
+        "tumbling": "0x12020",
+        "valuting": "0x12020",
+        "balancing": "0x12020"
+    },
+    "evaluating": {
+        "weapons": "0x00401",
+        "armour": "0x00401"
+    },
+    "perception": "0x00203",
+    "direction": "0x02201",
+    "health": "0x40010",
+    "points": "0x11111"
+}}
