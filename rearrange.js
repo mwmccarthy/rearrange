@@ -23,6 +23,7 @@ function getSkills(obj, acc = []) {
         } else {
             acc.push(k);
             console.log(`${acc.join(".")}: ${obj[k]}`);
+            acc = [];
         }
 
     }
