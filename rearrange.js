@@ -15,12 +15,6 @@ function getDigit(n, p, b) {
     return Math.floor(n / b**p) % b;
 }
 
-function getSkills(obj) {
-    for (const key in obj) {
-
-    }
-}
-
 // http://bonuses.irreducible.org/formulas.php
 //
 // A rearrange will be encoded as a five digit hexadecimal number such that each digit represents a stat.
@@ -72,8 +66,18 @@ request.open('GET', requestURL);
 request.responseType = 'json';
 request.send();
 request.onload = function() {
-    const skills = request.response;
     const datalist = document.getElementById("datalist");
-    const skar = JSON.stringify(skills);
-    debugger;
+    const skills = request.response;
+    const getSkills = function(obj, string = "") {
+        for (const key in obj) {
+            if (typeof obj[key] == "object") {
+                getSkills(obj[key], `${string}.${key}`);
+            } else {
+                let option = document.createElement("option");
+                option.innerHTML = `${string}.${key}`.slice(1);
+                datalist.appendChild(option);
+            }
+        }
+    }
+    getSkills(skills);
 }

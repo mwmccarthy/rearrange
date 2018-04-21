@@ -1,15 +1,27 @@
 {
 "adventuring": {
     "movement": {
-        "swimming": "0x22010",
+        "swimming": {
+            "statWeights": "0x22010"
+        },
         "riding": {
-            "horse": "0x22010",
-            "camel": "0x22010"
+            "horse": {
+                "statWeights": "0x22010"
+            },
+            "camel": {
+                "statWeights": "0x22010"
+            }
         },
         "climbing": {
-            "tree": "0x22010",
-            "rock": "0x22010",
-            "rope": "0x22010"
+            "tree": {
+                "statWeights": "0x22010"
+            },
+            "rock": {
+                "statWeights": "0x22010"
+            },
+            "rope": {
+                "statWeights": "0x22010"
+            }
         },
         "sailing": "0x22010",
         "following": {
@@ -30,4 +42,13 @@
     "direction": "0x02201",
     "health": "0x40010",
     "points": "0x11111"
+},
+"crafts": {
+    "smithing": {
+        "gold": "0x02210",
+        "silver": "0x02210",
+        "black": {
+            "tools": "0x02210"
+        }
+    }
 }}

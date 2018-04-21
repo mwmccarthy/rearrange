@@ -1,0 +1,252 @@
+=======SKILLS=======Stat dependencies===
+adventuring.........    -
+| movement..........    -
+| | swimming........   CCDDS
+| | riding..........    -
+| | | horse.........   CCDDS
+| | | camel.........   CCDDS
+| | climbing........    -
+| | | tree..........   CCDDS
+| | | rock..........   CCDDS
+| | | rope..........   CCDDS
+| | sailing.........   CCDDS
+| | following.......    -
+| | | pursuit.......   CCDDS
+| | | evade.........   CCDDS
+| acrobatics........    -
+| | tumbling........   CDDSS
+| | vaulting........   CDDSS
+| | balancing.......   CDDSS
+| evaluating........    -
+| | weapons.........   IIIIW
+| | armour..........   IIIIW
+| perception........   IIWWW
+| direction.........   DDIIW
+| health............   CCCCS
+| points............   CDISW
+covert..............   DDDII
+| stealth...........   DDDIS
+| | inside..........   DDDIS
+| | outside.........   DDDIS
+| | underwater......   DDDIS
+| hiding............   DDIIS
+| | person..........   DDIIS
+| | object..........   DDIIS
+| lockpick..........   DDDDI
+| | doors...........   DDDDI
+| | safes...........   DDDDI
+| | traps...........   DDDDI
+| manipulation......   DDISS
+| | palming.........   DDISS
+| | passing.........   DDISS
+| | sleight-of-hand.   DDISS
+| | stealing........   DDISS
+| casing............   DIIWW
+| | person..........   DIIWW
+| | place...........   DIIWW
+| items.............   DIIII
+| | poisons.........   DIIII
+| | traps...........   DIIII
+| | weapons.........   DIIII
+| points............   CDDII
+crafts..............   DDIIW
+| smithing..........   DDIIS
+| | gold............   DDIIS
+| | silver..........   DDIIS
+| | black...........   DDIIS
+| | | tools.........   DDIIS
+| | | weapons.......   DDIIS
+| | | armour........   DDIIS
+| | gem.............   DDIIS
+| | | cutting.......   DDIIS
+| | | polishing.....   DDIIS
+| | | setting.......   DDIIS
+| | locks...........   DDIIS
+| mining............   DIISS
+| | gem.............   DIISS
+| | ore.............   DIISS
+| | | panning.......   DIISS
+| | mineral.........   DIISS
+| hunting...........   DDIII
+| | tracking........   DDIII
+| | fishing.........   DDIII
+| | trapping........   DDIII
+| | foraging........   DDIII
+| carpentry.........   DDIIS
+| | furniture.......   DDIIS
+| | coopering.......   DDIIS
+| | turning.........   DDIIS
+| | whittling.......   DDIIS
+| pottery...........   DDDII
+| | forming.........   DDDII
+| | | throwing......   DDDII
+| | | shaping.......   DDDII
+| | glazing.........   DDDII
+| | staining........   DDDII
+| | firing..........   DDDII
+| materials.........   DDIIS
+| | tanning.........   DDIIS
+| | leatherwork.....   DDIIS
+| | weaving.........   DDIIS
+| | spinning........   DDIIS
+| | needlework......   DDIIS
+| | dyeing..........   DDIIS
+| husbandry.........   IIIWW
+| | plant...........   IIIWW
+| | | edible........   IIIWW
+| | | herbal........   IIIWW
+| | | milling.......   IIIWW
+| | | tree..........   IIIWW
+| | animal..........   IIIWW
+| | | grooming......   IIIWW
+| | | breeding......   IIIWW
+| | | slaughtering..   IIIWW
+| culinary..........   DDIII
+| | cooking.........   DDIII
+| | baking..........   DDIII
+| | butchering......   DDIII
+| | preserving......   DDIII
+| | brewing.........   DDIII
+| | distilling......   DDIII
+| medicine..........   DIIWW
+| | firstaid........   DIIWW
+| | diagnosis.......   DIIWW
+| | treatment.......   DIIWW
+| | | disease.......   DIIWW
+| | | injury........   DIIWW
+| | | poison........   DIIWW
+| arts..............   DIIII
+| | design..........   DIIII
+| | calligraphy.....   DIIII
+| | drawing.........   DIIII
+| | painting........   DIIII
+| | printing........   DIIII
+| | sculpture.......   DIIII
+| music.............   DIIII
+| | instruments.....   DIIII
+| | | percussion....   DIIII
+| | | wind..........   DIIII
+| | | stringed......   DIIII
+| | | keyboard......   DIIII
+| | | vocal.........   DIIII
+| | special.........   DIIII
+| | theory..........   DIIII
+| | performance.....   DIIII
+| points............   DDIIW
+faith...............   ISWWW
+| rituals...........   ISWWW
+| | offensive.......   ISSWW
+| | | area..........   ISSWW
+| | | target........   ISSWW
+| | defensive.......   DDIWW
+| | | area..........   DDIWW
+| | | self..........   DDIWW
+| | | target........   DDIWW
+| | curing..........   CCIWW
+| | | self..........   CCIWW
+| | | target........   CCIWW
+| | misc............   IIWWW
+| | | area..........   IIWWW
+| | | self..........   IIWWW
+| | | target........   IIWWW
+| | special.........   ISWWW
+| items.............   DIIWW
+| | rod.............   DIIWW
+| | scroll..........   DIIWW
+| points............   CIIWW
+fighting............   CDDSS
+| melee.............   CDDSS
+| | dagger..........   DDDDS
+| | sword...........   DDDSS
+| | heavy-sword.....   CDSSS
+| | axe.............   CDSSS
+| | mace............   CCDSS
+| | flail...........   CDDSS
+| | polearm.........   CCSSS
+| | misc............   CDDSS
+| range.............   DDDSS
+| | thrown..........   DDDSS
+| | bow.............   DDSSS
+| | fired...........   DDDDS
+| unarmed...........   DDSSW
+| | striking........   DDSWW
+| | grappling.......   DDSSW
+| defence...........   DDSSW
+| | parrying........   DDDSW
+| | blocking........   DDSSW
+| | dodging.........   DDDDW
+| special...........   CDIIS
+| | weapon..........   DIIIS
+| | unarmed.........   DDIII
+| | tactics.........   IIIWW
+| | mounted.........   CCDDW
+| points............   CCDSS
+magic...............   DIIIW
+| spells............   DIIWW
+| | offensive.......   IISSW
+| | defensive.......   CCIIW
+| | misc............   DDIIW
+| | special.........   IIWWW
+| methods...........   DIIIW
+| | elemental.......   CCCII
+| | | air...........   CCCII
+| | | earth.........   CCCII
+| | | fire..........   CCCII
+| | | water.........   CCCII
+| | mental..........   IIIII
+| | | animating.....   IIIII
+| | | channeling....   IIIII
+| | | charming......   IIIII
+| | | convoking.....   IIIII
+| | | cursing.......   IIIII
+| | physical........   DDDII
+| | | binding.......   DDDII
+| | | brewing.......   DDDII
+| | | chanting......   DDDII
+| | | dancing.......   DDDII
+| | | enchanting....   DDDII
+| | | evoking.......   DDDII
+| | | healing.......   DDDII
+| | | scrying.......   DDDII
+| | spiritual.......   IIWWW
+| | | abjuring......   IIWWW
+| | | banishing.....   IIWWW
+| | | conjuring.....   IIWWW
+| | | divining......   IIWWW
+| | | summoning.....   IIWWW
+| items.............   DIIWW
+| | held............   DIIWW
+| | | wand..........   DIIWW
+| | | rod...........   DIIWW
+| | | staff.........   DIIWW
+| | | broom.........   DIIWW
+| | worn............   DIIWW
+| | | amulet........   DIIWW
+| | | ring..........   DIIWW
+| | scroll..........   DIIWW
+| | talisman........   DIIWW
+| points............   IISWW
+people..............    -
+| trading...........    -
+| | buying..........   IIIIW
+| | selling.........   IIIIW
+| | valueing........    -
+| | | gems..........   IIIIW
+| | | jewellery.....   IIIIW
+| | | weapons.......   IIIIW
+| | | armour........   IIIIW
+| teaching..........    -
+| | covert..........   CDDII
+| | crafts..........   DDIIW
+| | faith...........   CIIWW
+| | fighting........   CDDSS
+| | magic...........   IISWW
+| | people..........   CDISW
+| | adventuring.....   CDISW
+| culture...........    -
+| | ankh-morporkian.   IIIWW
+| | djelian.........   IIIWW
+| | ephebian........   IIIWW
+| | agatean.........   IIIWW
+| | lancrastian.....   IIIWW
+| points............   CDISW
