@@ -15,16 +15,8 @@ function getDigit(n, p, b) {
     return Math.floor(n / b**p) % b;
 }
 
-function getSkills(obj, acc = []) {
-    for (const k in obj) {
-        if (typeof obj[k] === 'object') {
-            acc.push[k];
-            getSkills(obj[k], acc);
-        } else {
-            acc.push(k);
-            console.log(`${acc.join(".")}: ${obj[k]}`);
-            acc = [];
-        }
+function getSkills(obj) {
+    for (const key in obj) {
 
     }
 }
@@ -82,5 +74,6 @@ request.send();
 request.onload = function() {
     const skills = request.response;
     const datalist = document.getElementById("datalist");
-    getSkills(skills);
+    const skar = JSON.stringify(skills);
+    debugger;
 }
