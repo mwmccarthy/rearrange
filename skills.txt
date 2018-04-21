@@ -1,4 +1,3 @@
-=======SKILLS=======Stat dependencies===
 adventuring.........    -
 | movement..........    -
 | | swimming........   CCDDS
