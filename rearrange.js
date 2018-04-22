@@ -1,3 +1,5 @@
+const dataObj = { "skills": {} };
+
 // generate n digit numbers in base b which sum to s
 function* nDigitsSumToS(n, s, b, res = 0) {
     if (n == 0 && s == 0) {
@@ -60,24 +62,50 @@ for (const re of rearranges) {
 console.log(winner.toString(16));
 console.log(best);
 
-const requestURL = 'https://mwmccarthy.github.io/rearrange/skills.json';
+// const jsonURL = "https://mwmccarthy.github.io/rearrange/skills.json";
+const txtURL = "https://mwmccarthy.github.io/rearrange/skills.txt";
 const request = new XMLHttpRequest();
-request.open('GET', requestURL);
-request.responseType = 'json';
-request.send();
+
 request.onload = function() {
     const datalist = document.getElementById("datalist");
-    const skills = request.response;
-    const getSkills = function(obj, string = "") {
-        for (const key in obj) {
-            if (typeof obj[key] == "object") {
-                getSkills(obj[key], `${string}.${key}`);
-            } else {
-                let option = document.createElement("option");
-                option.innerHTML = `${string}.${key}`.slice(1);
-                datalist.appendChild(option);
-            }
-        }
+    const lines = request.response.split();
+
+    let obj = dataObj;
+    let keys = ["skills"];
+
+    for (const line of lines) {
+        const depth = (line.match(/\|/g) || []).length + 1;
+        const stats = (line.match(/[CDISW]/g) || []).reduce(function(s, hex) {
+            return hex + 16 ** "WSIDC".indexOf(s);
+        }, 0);
+
+        keys[depth] = line.match(/\w+/)[0];
+        for (let i = 0; i < depth; i++)
+            obj = obj[keys[i]];
+        obj[keys[depth]] = stats ? { "statDependencies": stats } : {};
     }
-    getSkills(skills);
+    console.log(dataObj);
+    debugger;
 }
+
+request.open("GET", txtURL);
+request.responseType = "text";
+request.send();
+
+
+// request.onload = function() {
+//     const datalist = document.getElementById("datalist");
+//     const skills = request.response;
+//     const getSkills = function(obj, string = "") {
+//         for (const key in obj) {
+//             if (typeof obj[key] == "object") {
+//                 getSkills(obj[key], `${string}.${key}`);
+//             } else {
+//                 let option = document.createElement("option");
+//                 option.innerHTML = `${string}.${key}`.slice(1);
+//                 datalist.appendChild(option);
+//             }
+//         }
+//     }
+//     getSkills(skills);
+// }
