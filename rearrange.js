@@ -3,9 +3,13 @@ const input = document.getElementById("input");
 const addButton = document.getElementById("add");
 const rankedBox = document.getElementById("rankedbox");
 const niceBox = document.getElementById("nicebox");
+const minHP = document.getElementById("minhp");
+const minGP = document.getElementById("mingp");
+const guild = document.getElementById("guild");
 const datalist = document.getElementById("datalist");
 const skillsList = document.getElementById("skills_list");
 const error = document.getElementById("error");
+const nominal = statMultiplicator(0x11111, 0x55555);
 
 // generate n digit numbers in base b which sum to s
 function* nDigitsSumToS(n, s, b, res = 0) {
@@ -49,28 +53,87 @@ function statMultiplicator(sk, re) {
     return 5 * Math.log(product) / 49 - 1/4;
 }
 
-// Rearranging in Discworld MUD is equivalent to the problem in combinatorics of
-// putting 25 indistinct balls into 5 distinct bins each with capacity 15.
-// This also happens to be equivalent to the problem of finding all five-digit
-// hexadecimal numbers whose digits sum to 25. Therefore, we can generate all
-// such numbers and they will each encode a uniqe rearrange.
 function updateRearrange() {
+    // Rearranging in Discworld MUD is equivalent to the problem in combinatorics of
+    // putting 25 indistinct balls into 5 distinct bins each with capacity 15.
+    // This also happens to be equivalent to the problem of finding all five-digit
+    // hexadecimal numbers whose digits sum to 25. Therefore, we can generate all
+    // such numbers and they will each encode a uniqe rearrange.
     const rearranges = nDigitsSumToS(5, 25, 16);
+
+    // get the user's skill list
     const skills = Array.from(document.querySelectorAll("li.list_item > span")).map(s => s.innerText);
-    if (skills.length < 1) return;
-    let best = 0;
-    let winner;
+
+    if (!skills.length) skills.push("adventuring.points");
+
+    let best = 0; // keep track of the best average skill multiplier for a given rearrange and list of skills
+    let winner; // the "best" hex encoded rearrange
+
+    // array containing hex encoded skill dependencies for the uer's list of skills
     const deps = skills.map(sk => sk.split(".").reduce((obj, prop) => obj[prop], dataObj.skills).statDeps);
-    checkre: for (const re of rearranges) {
+
+    // check all possible rearranges
+    checkall: for (const re of rearranges) {
+
+        // skip this rearrange if it doesn't satisfy the minimum stat parameters set by the user
+        // ["minwis", "minstr", "minint", "mindex", "mincon"].forEach((statmin) => {
+        //     if (document.getElementById(statmin).value > getDigit(re, i, 16)) continue checkall;
+        // });
+
+        // boolean, true if the rearrange meets the minimum stat requirements set by the user
+        const meetMin = ["minwis", "minstr", "minint", "mindex", "mincon"].reduce(function(res, statmin, i) {
+            return res && document.getElementById(statmin).value <= getDigit(re, i, 16) + 8;
+        }, true);
+
+        // skip this rearrange if it doesn't meet the minimums
+        if (!meetMin) continue checkall;
+
+        // hp regen rate for this rearrange
+        const hpRegen = Math.floor(Math.sqrt(200 * statMultiplicator(dataObj.skills.adventuring.health.statDeps, re)) - 10);
+
+        // skip this rearrange if it doesn't meet minimum HP regen
+        if (hpRegen < minHP.value) continue checkall;
+
+        // points skill for selected guild
+        const points = {
+            "Adventurer": 0x21020,
+            "Assassin": 0x12200,
+            "Priest": 0x10202,
+            "Thief": 0x12200,
+            "Warrior": 0x21020,
+            "Witch": 0x00212,
+            "Wizard": 0x00212
+        }[guild.value];
+
+        // gp regen rate for this guild and rearrange
+        const gpRegen = Math.floor(Math.sqrt(175 * statMultiplicator(points, re)) - 10);
+
+        // skip this rearrange if it doesn't meet minimum GP regen
+        if (gpRegen < minGP.value) continue checkall;
+
+        // array containing this rearrange's multipliers for each skill
         const weightings = deps.map(dep => statMultiplicator(dep, re));
-        const ranked = weightings.reduce((a, b, i) => a && b > (weightings[i+1] || 0), true);
-        if (rankedBox.checked && !ranked) continue checkre;
+
+        // boolean, true if the multipliers are in descending order
+        const ranked = weightings.reduce((a, b, i) => a && b >= (weightings[i+1] || 0), true);
+
+        // skip this rearrange if the user has asked for ranked skills and this rearrange doesn't produce multipliers in descending order
+        if (rankedBox.checked && !ranked) continue checkall;
+
+        // if the "all nice" box is checked, skip this rearrange if any multiplier is less than the nominal multiplier
+        if (niceBox.checked && !weightings.every(w => w >= nominal)) continue checkall;
+
+        // the arithmetic mean of the multipliers for each skill
         const avg = weightings.reduce((cma, w, i) => cma + (w - cma)/(i + 1));
+
+        // if this is the best rearrange yet, it's the new winner
         if (avg > best) {
             winner = re;
             best = avg;
         }
     }
+
+    // output the winning rearrange to the page
     ["wis", "str", "int", "dex", "con"].forEach(function(stat, i) {
         document.getElementById(stat).innerText = winner ? getDigit(winner, i, 16) + 8 : 0;
     });
@@ -170,32 +233,32 @@ request.onload = function() {
     });
 
     niceBox.addEventListener("change", function() {
-        updateRearrange()
+        updateRearrange();
     });
 
     rankedBox.addEventListener("change", function() {
-        updateRearrange()
+        updateRearrange();
+    });
+
+    ["minwis", "minstr", "minint", "mindex", "mincon"].forEach(function(statmin) {
+        document.getElementById(statmin).addEventListener("change", function() {
+            updateRearrange();
+        });
+    });
+
+    guild.addEventListener("change", function() {
+        updateRearrange();
+    });
+
+    minHP.addEventListener("change", function() {
+        updateRearrange();
+    });
+
+    minGP.addEventListener("change", function() {
+        updateRearrange();
     });
 }
 
 request.open("GET", txtURL);
 request.responseType = "text";
 request.send();
-
-
-// request.onload = function() {
-//     const datalist = document.getElementById("datalist");
-//     const skills = request.response;
-//     const getSkills = function(obj, string = "") {
-//         for (const key in obj) {
-//             if (typeof obj[key] == "object") {
-//                 getSkills(obj[key], `${string}.${key}`);
-//             } else {
-//                 let option = document.createElement("option");
-//                 option.innerHTML = `${string}.${key}`.slice(1);
-//                 datalist.appendChild(option);
-//             }
-//         }
-//     }
-//     getSkills(skills);
-// }
