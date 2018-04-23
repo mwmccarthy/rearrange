@@ -1,4 +1,11 @@
 const dataObj = { "skills": {} };
+const input = document.getElementById("input");
+const addButton = document.getElementById("add");
+const rankedBox = document.getElementById("rankedbox");
+const niceBox = document.getElementById("nicebox");
+const datalist = document.getElementById("datalist");
+const skillsList = document.getElementById("skills_list");
+const error = document.getElementById("error");
 
 // generate n digit numbers in base b which sum to s
 function* nDigitsSumToS(n, s, b, res = 0) {
@@ -47,45 +54,128 @@ function statMultiplicator(sk, re) {
 // This also happens to be equivalent to the problem of finding all five-digit
 // hexadecimal numbers whose digits sum to 25. Therefore, we can generate all
 // such numbers and they will each encode a uniqe rearrange.
-const rearranges = nDigitsSumToS(5, 25, 16);
-
-let best = 0;
-let winner;
-for (const re of rearranges) {
-    const m = statMultiplicator(0x02012, re);
-    if (m > best) {
-        winner = re;
-        best = m;
+function updateRearrange() {
+    const rearranges = nDigitsSumToS(5, 25, 16);
+    const skills = Array.from(document.querySelectorAll("li.list_item > span")).map(s => s.innerText);
+    if (skills.length < 1) return;
+    let best = 0;
+    let winner;
+    const deps = skills.map(sk => sk.split(".").reduce((obj, prop) => obj[prop], dataObj.skills).statDeps);
+    checkre: for (const re of rearranges) {
+        const weightings = deps.map(dep => statMultiplicator(dep, re));
+        const ranked = weightings.reduce((a, b, i) => a && b > (weightings[i+1] || 0), true);
+        if (rankedBox.checked && !ranked) continue checkre;
+        const avg = weightings.reduce((cma, w, i) => cma + (w - cma)/(i + 1));
+        if (avg > best) {
+            winner = re;
+            best = avg;
+        }
     }
+    ["wis", "str", "int", "dex", "con"].forEach(function(stat, i) {
+        document.getElementById(stat).innerText = winner ? getDigit(winner, i, 16) + 8 : 0;
+    });
 }
 
-console.log(winner.toString(16));
-console.log(best);
-
-// const jsonURL = "https://mwmccarthy.github.io/rearrange/skills.json";
 const txtURL = "https://mwmccarthy.github.io/rearrange/skills.txt";
 const request = new XMLHttpRequest();
 
 request.onload = function() {
-    const datalist = document.getElementById("datalist");
-    const lines = request.response.split();
-
-    let obj = dataObj;
-    let keys = ["skills"];
+    const lines = request.response.split("\n").slice(0, -1);
+    const keys = ["skills"];
 
     for (const line of lines) {
         const depth = (line.match(/\|/g) || []).length + 1;
-        const stats = (line.match(/[CDISW]/g) || []).reduce(function(s, hex) {
-            return hex + 16 ** "WSIDC".indexOf(s);
+        const stats = (line.match(/[CDISW]/g) || []).reduce(function(hex, stat) {
+            return hex + 16 ** ("WSIDC".indexOf(stat));
         }, 0);
 
-        keys[depth] = line.match(/\w+/)[0];
-        for (let i = 0; i < depth; i++)
+        let obj = dataObj;
+
+        keys[depth] = line.match(/[\w-]+/)[0];
+        for (let i = 0; i < depth; i++) {
             obj = obj[keys[i]];
-        obj[keys[depth]] = stats ? { "statDependencies": stats } : {};
+        }
+        if (stats) {
+            const option = document.createElement("option");
+            option.innerHTML = keys.slice(1, depth + 1).join(".");
+            datalist.appendChild(option);
+            obj[keys[depth]] = { "statDeps": stats };
+        }
+        else {
+            obj[keys[depth]] = {};
+        }
     }
-    console.log(dataObj);
-    debugger;
+
+    addButton.addEventListener("click", function() {
+        if (!Array.from(datalist.childNodes).map(o => o.value).includes(input.value)) {
+            input.value = "";
+            error.innerText = "Enter a valid skill from the list.";
+            return;
+        }
+
+        if (Array.from(document.querySelectorAll("li.list_item > span")).map(s => s.innerText).includes(input.value)) {
+            input.value = "";
+            error.innerText = "Enter a skill which hasn't already been added.";
+            return;
+        }
+
+        error.innerText = "";
+
+        const li = document.createElement("li");
+        const removeButton = document.createElement("i");
+        const upButton = document.createElement("i");
+        const downButton = document.createElement("i");
+        const skill = document.createElement("span");
+
+        li.setAttribute("class", "list_item");
+        removeButton.setAttribute("class", "button red");
+        upButton.setAttribute("class", "button blue");
+        downButton.setAttribute("class", "button blue");
+
+        removeButton.innerText = "\u2297";
+        upButton.innerText = "\u2191";
+        downButton.innerText = "\u2193";
+        skill.innerText = `${input.value}`;
+        input.value = "";
+
+        li.appendChild(upButton);
+        li.appendChild(downButton);
+        li.appendChild(skill);
+        li.appendChild(removeButton);
+
+        skillsList.appendChild(li);
+
+        removeButton.addEventListener("click", function() {
+            this.parentNode.parentNode.removeChild(this.parentNode);
+            updateRearrange();
+        });
+
+        upButton.addEventListener("click", function() {
+            const prev = this.parentNode.previousSibling;
+            if (prev) this.parentNode.parentNode.insertBefore(this.parentNode, prev);
+            updateRearrange();
+        });
+
+        downButton.addEventListener("click", function() {
+            const next = this.parentNode.nextSibling;
+            if (next) this.parentNode.parentNode.insertBefore(next, this.parentNode);
+            updateRearrange();
+        });
+
+        updateRearrange();
+    });
+
+    input.addEventListener("keyup", function(e) {
+        if (e.keyCode === 13) addButton.click();
+    });
+
+    niceBox.addEventListener("change", function() {
+        updateRearrange()
+    });
+
+    rankedBox.addEventListener("change", function() {
+        updateRearrange()
+    });
 }
 
 request.open("GET", txtURL);

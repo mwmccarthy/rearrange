@@ -1,12 +1,66 @@
 <html>
 <head>
 <title>Discworld MUD Rearrange Helper</title>
+<link href="./styles.css" rel="stylesheet">
 </head>
 <body>
     <h1>Discworld MUD Rearrange Helper</h1>
-    <input type="text" list="datalist">
-    <datalist id="datalist">
-    </datalist>
+    <div id="rearrange">
+        <span class="stat">con: <span id="con">13</span></span>
+        <span class="stat">dex: <span id="dex">13</span></span>
+        <span class="stat">int: <span id="int">13</span></span>
+        <span class="stat">str: <span id="str">13</span></span>
+        <span class="stat">wis: <span id="wis">13</span></span>
+    </div>
+    <div class="error"><span id="error"></span></div>
+    <table><tbody><tr>
+    <td id="col1">
+        <div>
+            <label for="input">Skill:</label>
+            <input type="text" list="datalist" id="input" placeholder="Start typing a skill...">
+            <i id="add" class="button green">&#8853;</i>
+            <datalist id="datalist"></datalist>
+        </div>
+        <div>
+            <ol id="skills_list"></ol>
+        </div>
+    </td>
+    <td id="col2">
+        <div>
+            <label for="guild">Guild:</label>
+            <select id="guild">
+                <option>Adventurer</option>
+                <option>Assassin</option>
+                <option>Priest</option>
+                <option>Thief</option>
+                <option>Warrior</option>
+                <option>Witch</option>
+                <option>Wizard</option>
+            </select>
+        </div>
+        <div>
+            <span class="minimum">Regen rate at least:</span>
+            <label for="mincon">HP:</label><input type="number" class="number" id="mincon" value="2" min="2" max="6">
+            <label for="mindex">GP:</label><input type="number" class="number" id="mindex" value="1" min="1" max="4">
+        </div>
+        <div>
+            <span class="minimum">Minimum:</span>
+            <label for="mincon">C:</label><input type="number" class="number" id="mincon" value="8" min="8" max="23">
+            <label for="mindex">D:</label><input type="number" class="number" id="mindex" value="8" min="8" max="23">
+            <label for="minint">I:</label><input type="number" class="number" id="minint" value="8" min="8" max="23">
+            <label for="minstr">S:</label><input type="number" class="number" id="minstr" value="8" min="8" max="23">
+            <label for="minwis">W:</label><input type="number" class="number" id="minwis" value="8" min="8" max="23">
+        </div>
+        <div>
+            <label for="rankedbox">skills ranked</label>
+            <input type="checkbox" id="rankedbox" class="checkbox" checked>
+        </div>
+        <div>
+            <label for="nicebox">all nice</label>
+            <input type="checkbox" id="nicebox" class="checkbox">
+        </div>
+    </td>
+    </tr></tbody></table>
     <script src="./rearrange.js" defer></script>
 </body>
 </html>

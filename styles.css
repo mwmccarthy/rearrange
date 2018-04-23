@@ -1,0 +1,125 @@
+body {
+    font-family: "sans";
+}
+
+#col1 > div > label {
+    font-size: 16pt;
+}
+
+#col2 > div > label {
+    font-size: 14pt;
+}
+
+.minimum {
+    font-size: 14pt;
+    font-weight: bold;
+    display: block;
+}
+
+table {
+    margin: auto;
+    width: 60em;
+}
+
+#col1 {
+    text-align: left;
+    vertical-align: top;
+}
+
+#col2 {
+    text-align: right;
+    vertical-align: top;
+}
+
+#col2 > div {
+    margin-bottom: 1em;
+}
+
+ol {
+    margin-left: 1em;
+    padding-left: 0px;
+}
+
+li {
+    font-size: 16pt;
+    list-style-type: none;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+input#input {
+    font-size: 16pt;
+    width: 20em;
+}
+
+input.number {
+    font-size: 16pt;
+    width: 2em;
+}
+
+h1 {
+    text-align: center;
+}
+
+div#rearrange {
+    text-align: center;
+    font-size: 24pt;
+    margin: 24pt;
+}
+
+select#guild {
+    font-size: 16pt;
+    width: 6em;
+}
+
+span.stat {
+    margin: 12pt;
+}
+
+label {
+    font-weight: bold;
+}
+
+.button {
+    padding-left: 0.1em;
+    margin-left: 0.1em;
+    padding-right: 0.1em;
+    margin-right: 0.1em;
+    font-family: "DejaVu Sans Mono";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24pt;
+    user-select: none;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.green {
+    color: green;
+}
+
+.green:active {
+    color: lightgreen;
+}
+
+.red {
+    color: red;
+}
+
+.red:active {
+    color: indianred;
+}
+
+.blue {
+    color: blue;
+}
+
+.blue:active {
+    color: lightblue;
+}
+
+.error {
+    color: indianred;
+    text-align: center;
+    height: 2em;
+}
